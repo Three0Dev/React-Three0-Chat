@@ -68,3 +68,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# React Firebase Super Chat
+
+A simple fullstack chat demo with React and Firebase. 
+
+Watch on full [React Firebase Chat Tutorial](https://youtu.be/zQyrwxMPm88) on YouTube. 
+
+[Live demo](https://fireship-demos.web.app/)
