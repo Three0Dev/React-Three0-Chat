@@ -1,15 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import { createRoot } from 'react-dom/client'
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {init} from 'three0-js-sdk';
+import {reportWebVitals} from './reportWebVitals';
+import './App.css'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const config = {
+  "contractName": "dev-1654358258368-10220982874835",
+  "projectId": "project_0",
+  "chainType": "NEAR_TESTNET",
+};
+
+init(config)
+	.then(() => {
+		const container = document.querySelector('#root')
+		const root = createRoot(container)
+		// eslint-disable-next-line react/jsx-filename-extension
+		root.render(<React.StrictMode><App /></React.StrictMode>)
+	})
+	.catch(console.error)
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
