@@ -1,14 +1,14 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client'
 import App from './App';
-import {init} from 'three0-js-sdk';
-import {reportWebVitals} from './reportWebVitals';
+import init from 'three0-js-sdk';
+import reportWebVitals from './reportWebVitals';
 import './App.css'
 
 const config = {
-  "contractName": "dev-1654358258368-10220982874835",
-  "projectId": "project_0",
-  "chainType": "NEAR_TESTNET",
+	"contractName": "test7-pseyuhwg2d119xpuwlynk6.sree2.testnet",
+	"projectId": "test7-pseyuhwg2d119xpuwlynk6",
+	"chainType": "NEAR_TESTNET"
 };
 
 init(config)
