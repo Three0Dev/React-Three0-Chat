@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# React Three0 Super Chat
+A simple fullstack chat demo with React and Three0.
+
+Original Credits go to [Fireship.io](https://fireship.io/). This is a fork of the original project meant to demonstrate the versatility and use case of the Three0 platform. This repository is not intended to be used as a production-ready chat application.
+
+## Getting Started
+1. Clone the repository
+2. Install dependencies
+3. Create Three0 project in developer console
+4. Copy Configuration and Database URL to `src/env.js`
+5. Run `npm start`
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,10 +80,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# React Firebase Super Chat
 
-A simple fullstack chat demo with React and Firebase. 
-
-Watch on full [React Firebase Chat Tutorial](https://youtu.be/zQyrwxMPm88) on YouTube. 
-
-[Live demo](https://fireship-demos.web.app/)
+## Notes
+Since the latest version of react-scripts is now using Webpack 5, [react-scripts-rewired](https://github.com/timarney/react-app-rewired) is now being used in order to support polyfills.
