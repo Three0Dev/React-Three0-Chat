@@ -4,14 +4,9 @@ import App from './App';
 import init from 'three0-js-sdk';
 import reportWebVitals from './reportWebVitals';
 import './App.css'
+import { env } from './env';
 
-const config = {
-	"contractName": "test7-pseyuhwg2d119xpuwlynk6.sree2.testnet",
-	"projectId": "test7-pseyuhwg2d119xpuwlynk6",
-	"chainType": "NEAR_TESTNET"
-};
-
-init(config)
+init(env.three0Config)
 	.then(() => {
 		const container = document.querySelector('#root')
 		const root = createRoot(container)

@@ -1,6 +1,7 @@
 import React from 'react';
 import {isLoggedIn, login, logout, getAccountId} from 'three0-js-sdk/auth'
 import {getDocStore} from 'three0-js-sdk/database'
+import { env } from './env';
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function ChatRoom() {
   const [messages, setMessages] = React.useState([]);
 
   React.useEffect(() => {
-      getDocStore('/orbitdb/zdpuAv9zpwBWN8QD5znUyJJ6uBu4DBqvoPYPWhPuTGC66p5fv/three0-chat-room').then((docstore) => {
+      getDocStore(env.chatAppDBURL).then((docstore) => {
         setMessagesRef(docstore);
         setMessages(docstore.get())
       })
