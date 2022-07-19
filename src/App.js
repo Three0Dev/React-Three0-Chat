@@ -1,6 +1,6 @@
 import React from 'react';
 import {isLoggedIn, login, logout, getAccountId} from 'three0-js-sdk/auth'
-import {getDocStore} from 'three0-js-sdk/database'
+import {getDocStore, timestamp} from 'three0-js-sdk/database'
 import { env } from './env';
 
 function App() {
@@ -55,14 +55,17 @@ function ChatRoom() {
 
     const uid = getAccountId();
 
-    await messagesRef.set(uid, {
+    const payload = {
       text: formValue,
-      createdAt: (new Date()).valueOf(),
+      createdAt: timestamp(),
       uid,
-    })
+    }
+
+    const id = await messagesRef.add(payload)
+
+    setMessages([...messages, { ...payload, _id: id }])
 
     setFormValue('');
-    
   }
 
   return (<>
@@ -87,7 +90,6 @@ function ChatMessage(props) {
   return (
   <>
     <div className={`message ${messageClass}`}>
-      {/* <img src={photoURL} /> */}
       <p>{text}</p>
     </div>
   </>)
