@@ -42,7 +42,10 @@ function ChatRoom() {
   React.useEffect(() => {
       getDocStore(env.chatAppDBURL).then((docstore) => {
         setMessagesRef(docstore);
-        setMessages(docstore.get())
+        setMessages(docstore.get().reverse());
+        docstore.onChange(() => {
+          setMessages(docstore.get().reverse())
+        })
       })
   }, []);
 
