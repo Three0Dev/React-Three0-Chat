@@ -40,7 +40,7 @@ function ChatRoom() {
   const [messages, setMessages] = React.useState([]);
 
   React.useEffect(() => {
-      getDocStore(env.chatAppDBURL).then((docstore) => {
+      getDocStore(env.chatAppDBURL, {indexBy: 'createdAt'}).then((docstore) => {
         setMessagesRef(docstore);
         setMessages(docstore.get().reverse());
         docstore.onChange(() => {
