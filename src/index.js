@@ -11,7 +11,7 @@ init(env.three0Config)
 		const container = document.querySelector('#root')
 		const root = createRoot(container)
 		// eslint-disable-next-line react/jsx-filename-extension
-		root.render(<React.StrictMode><App /></React.StrictMode>)
+		root.render(<App />)
 	})
 	.catch(console.error)
 
