@@ -1,6 +1,6 @@
 import React from 'react';
-import {isLoggedIn, login, logout, getAccountId} from '@three0/js-sdk/auth'
-import {getDocStore, timestamp} from '@three0/js-sdk/database'
+import {isLoggedIn, login, logout, getAccountId} from '@three0dev/js-sdk/auth'
+import {getDocStore, timestamp} from '@three0dev/js-sdk/database'
 import { env } from './env';
 
 function App() {
