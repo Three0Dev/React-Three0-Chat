@@ -9,7 +9,7 @@
     "eject": "react-app-rewired eject"
   },
   "dependencies": {
-    "@three0dev/js-sdk": "^0.1.2-alpha",
+    "@three0dev/js-sdk": "^0.2.0-alpha",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1"

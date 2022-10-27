@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client'
 import App from './App';
-import init from '@three0dev/js-sdk';
+import { init } from '@three0dev/js-sdk';
 import './App.css'
 import { env } from './env';
 

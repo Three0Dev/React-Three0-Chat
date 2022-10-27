@@ -1,6 +1,5 @@
 import React from 'react';
-import {isLoggedIn, login, logout, getAccountId} from '@three0dev/js-sdk/auth'
-import {getDocStore, timestamp} from '@three0dev/js-sdk/database'
+import {Auth, Database} from '@three0dev/js-sdk'
 import { env } from './env';
 
 function App() {
@@ -12,7 +11,7 @@ function App() {
       </header>
 
       <section>
-        {isLoggedIn() ? <ChatRoom /> : <SignIn />}
+        {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />}
       </section>
 
     </div>
@@ -20,7 +19,7 @@ function App() {
 }
 
 function SignIn() {
-  const signIn = login;
+  const signIn = Auth.login;
 
   return (
       <button onClick={signIn}>Sign in with NEAR</button>
@@ -28,10 +27,10 @@ function SignIn() {
 }
 function SignOut() {
   const signOut = async () => {
-    await logout()
+    await Auth.logout()
   }
 
-  return isLoggedIn() && (
+  return Auth.isLoggedIn() && (
       <button onClick={signOut}>Sign out</button>
   )
 }
@@ -40,7 +39,7 @@ function ChatRoom() {
   const [messages, setMessages] = React.useState([]);
 
   React.useEffect(() => {
-      getDocStore(env.chatAppDBURL, {indexBy: 'createdAt'}).then((docstore) => {
+      Database.DocStore(env.chatAppDBURL, {indexBy: 'createdAt'}).then((docstore) => {
         setMessagesRef(docstore);
         setMessages(docstore.get().reverse());
         docstore.onChange(() => {
@@ -56,11 +55,11 @@ function ChatRoom() {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const uid = getAccountId();
+    const uid = Auth.getAccountId();
 
     const payload = {
       text: formValue,
-      createdAt: timestamp(),
+      createdAt: Database.timestamp(),
       uid,
     }
 
@@ -88,7 +87,7 @@ function ChatRoom() {
 function ChatMessage(props) {
   const { text, uid } = props.message;
 
-  const messageClass = uid === getAccountId() ? 'sent' : 'received';
+  const messageClass = uid === Auth.getAccountId() ? 'sent' : 'received';
 
   return (
   <>
