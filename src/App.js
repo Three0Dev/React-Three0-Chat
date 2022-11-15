@@ -79,14 +79,17 @@ function ChatRoom() {
     setFormValue('');
   }
 
+  const [file, setFile] = React.useState(null);
   // send files
   const sendFileMessage = async (e) => {
     e.preventDefault();
 
     const uid = Auth.getAccountId();
 
+    console.log(files);
+
     const payload = {
-      file : files[0].name,
+      file : files.name,
       createdAt: Database.timestamp(),
       uid,
     }
@@ -95,8 +98,8 @@ function ChatRoom() {
 
     setMessages([...messages, { ...payload, _id: id }])
     setFormValue('image')
-    Storage.uploadFile(files[0])
-    Storage.openFile(files[0].name)
+    Storage.uploadFile(files);
+    Storage.openFile(files.name);
   }
   // let selected = false;
   return (<>
@@ -110,9 +113,8 @@ function ChatRoom() {
       <input type="file" id="myFile" name="filename" onChange={
         (e) => {
           files = e.target.files[0];
-          console.log(files);
           setFormValue('image');
-          // selected=true;
+          setFile(files);
         }
       }/>
 
@@ -121,14 +123,22 @@ function ChatRoom() {
   </>)
 }
 function ChatMessage(props) {
-  const { text, uid } = props.message;
+  const messageClass = props.message.uid === Auth.getAccountId() ? 'sent' : 'received';
+  const [imageMedia, setImageMedia] = React.useState("")
 
-  const messageClass = uid === Auth.getAccountId() ? 'sent' : 'received';
+  React.useEffect(() => {
+    if(props.message.file){
+      Storage.openFile(props.message.file).then((data) => {
+        console.log(data)
+        setImageMedia(data.media)
+      })
+    }
+  }, []);
 
   return (
   <>
     <div className={`message ${messageClass}`}>
-      <p>{text}</p>
+      {props.message.file ? <img border-radius='80%' src={imageMedia}/> : <p>{props.message.text}</p>}
     </div>
   </>)
 }

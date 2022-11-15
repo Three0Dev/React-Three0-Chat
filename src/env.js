@@ -1,10 +1,10 @@
 export const env = {
     // NOTE: Replace with your own project configuration
     three0Config: {
-        "contractName": "chat_three0-guyvhs8wz1seehaaifcbfw.testnet",
-"projectId": "chat_three0-guyvhs8wz1seehaaifcbfw",
+        "contractName": "host-three0-rq8i3vzzsssbclzvu17g7v.testnet",
+"projectId": "host-three0-rq8i3vzzsssbclzvu17g7v",
 "chainType": "NEAR_TESTNET"
     },
     // NOTE: Add your own docstore database here
-    chatAppDBURL: "/orbitdb/zdpuAqDXJ2woth3JjfJ2SDruPi9gPB3XQTEpScPKRgp9HHcs6/app"
+    chatAppDBURL: "/orbitdb/zdpuAsNQ2TorfhoXPYmaAKQj1n36kHSTyRs6cw7AfLyZ2LynC/test"
 }
