@@ -1,19 +1,26 @@
 import React from 'react';
 import {Auth, Database, Storage} from '@three0dev/js-sdk'
 import { env } from './env';
+import IconButton from '@mui/material/IconButton';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import SendIcon from '@mui/icons-material/Send';
+import PaidIcon from '@mui/icons-material/Paid';
+import { TextField, Select, InputLabel, FormControl } from '@mui/material'
+import Swal from 'sweetalert2'
 
 
-let files = [];
+
 function App() {
   return (
     <div className="App">
       <header>
-        <h1>⚛️🔥💬</h1>
+        <h1>Chat App ⚛️🔥💬</h1>
         <SignOut />
       </header>
 
       <section>
-        {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />}
+        {/* {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />} */}
+        <ChatRoom />
       </section>
 
     </div>
@@ -79,8 +86,7 @@ function ChatRoom() {
     setFormValue('');
   }
 
-  const [file, setFile] = React.useState(null);
-  // send files
+  const [files, setFile] = React.useState(null);
   const sendFileMessage = async (e) => {
     e.preventDefault();
 
@@ -98,27 +104,74 @@ function ChatRoom() {
 
     setMessages([...messages, { ...payload, _id: id }])
     setFormValue('image')
-    Storage.uploadFile(files);
-    Storage.openFile(files.name);
+    // Storage.uploadFile(files);
+    // Storage.openFile(files.name);
   }
-  // let selected = false;
+
   return (<>
     <main>
       {messages && messages.map(msg => <ChatMessage key={msg._id} message={msg} />)}
     </main>
+    {/* if file was selected then sendfilemessage, else sendtextmessage*/}
     <form onSubmit={formValue === 'image' ? sendFileMessage : sendTextMessage}>
+    {/* <form onSubmit={formValue === 'image' ? sendFileMessage : sendTextMessage}> */}
 
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
-
-      <input type="file" id="myFile" name="filename" onChange={
+      <IconButton color="primary" aria-label="upload picture" component="label" onClick={
+        // open sweetalert
+        async () => {
+          const { value: amount } = await Swal.fire({
+            title: 'Three0 Pay',
+            html:
+              '<input id="swal-input1" class="swal2-input" placeholder="Amount">' +
+              '<select id="swal-input2" class="swal2-input">' +
+              '<option value="send">Send</option>' +
+              '<option value="request">Request</option>' +
+              '</select>',
+            focusConfirm: false,
+            preConfirm: () => {
+              return [
+                  document.getElementById('swal-input1').value,
+                  document.getElementById('swal-input2').value
+                ]
+            }
+            
+          }).then((result) => {
+            // if request then send request else send money
+            if(result.value[1] === 'request'){
+              Swal.fire({
+                title: 'Request Sent',
+                text: 'You have requested ' + result.value[0] + ' NEAR',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              })
+            }
+            else{
+              Swal.fire({
+                title: 'Money Sent',
+                text: 'You have sent ' + result.value[0] + ' NEAR',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              })
+            }
+          })
+        }
+      }>
+        {/* send money */}
+        <PaidIcon />
+      </IconButton>
+      <IconButton color="primary" aria-label="upload picture" component="label">
+        <input hidden accept="image/*" type="file" id="myFile" name="filename" onChange={
         (e) => {
-          files = e.target.files[0];
+          setFile(e.target.files[0]);
+          console.log(e.target.files[0]);
           setFormValue('image');
-          setFile(files);
         }
       }/>
+        <InsertPhotoIcon />
+      </IconButton>
 
-      <button type="submit" disabled={!formValue}>🕊️</button>
+      <button type="submit" disabled={!formValue}><SendIcon/></button>
     </form>
   </>)
 }
