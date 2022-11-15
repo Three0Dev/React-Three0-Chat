@@ -1,7 +1,9 @@
 import React from 'react';
-import {Auth, Database} from '@three0dev/js-sdk'
+import {Auth, Database, Storage} from '@three0dev/js-sdk'
 import { env } from './env';
 
+
+let files = [];
 function App() {
   return (
     <div className="App">
@@ -34,6 +36,13 @@ function SignOut() {
       <button onClick={signOut}>Sign out</button>
   )
 }
+function UploadFile() {
+  const uploadFile = Storage.uploadFile();
+  return (
+    <button onClick={uploadFile}>Upload File</button>
+  )
+}
+
 function ChatRoom() {
   const [messagesRef, setMessagesRef] = React.useState(null);
   const [messages, setMessages] = React.useState([]);
@@ -52,7 +61,7 @@ function ChatRoom() {
   const [formValue, setFormValue] = React.useState('');
 
 
-  const sendMessage = async (e) => {
+  const sendTextMessage = async (e) => {
     e.preventDefault();
 
     const uid = Auth.getAccountId();
@@ -70,17 +79,44 @@ function ChatRoom() {
     setFormValue('');
   }
 
+  // send files
+  const sendFileMessage = async (e) => {
+    e.preventDefault();
+
+    const uid = Auth.getAccountId();
+
+    const payload = {
+      file : files[0].name,
+      createdAt: Database.timestamp(),
+      uid,
+    }
+
+    const id = await messagesRef.add(payload)
+
+    setMessages([...messages, { ...payload, _id: id }])
+    setFormValue('image')
+    Storage.uploadFile(files[0])
+    Storage.openFile(files[0].name)
+  }
+  // let selected = false;
   return (<>
     <main>
       {messages && messages.map(msg => <ChatMessage key={msg._id} message={msg} />)}
     </main>
-
-    <form onSubmit={sendMessage}>
+    <form onSubmit={formValue === 'image' ? sendFileMessage : sendTextMessage}>
 
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
-      <button type="submit" disabled={!formValue}>🕊️</button>
+      <input type="file" id="myFile" name="filename" onChange={
+        (e) => {
+          files = e.target.files[0];
+          console.log(files);
+          setFormValue('image');
+          // selected=true;
+        }
+      }/>
 
+      <button type="submit" disabled={!formValue}>🕊️</button>
     </form>
   </>)
 }
