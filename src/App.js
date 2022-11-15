@@ -8,8 +8,6 @@ import PaidIcon from '@mui/icons-material/Paid';
 import { TextField, Select, InputLabel, FormControl } from '@mui/material'
 import Swal from 'sweetalert2'
 
-
-
 function App() {
   return (
     <div className="App">
@@ -41,12 +39,6 @@ function SignOut() {
 
   return Auth.isLoggedIn() && (
       <button onClick={signOut}>Sign out</button>
-  )
-}
-function UploadFile() {
-  const uploadFile = Storage.uploadFile();
-  return (
-    <button onClick={uploadFile}>Upload File</button>
   )
 }
 
@@ -103,20 +95,16 @@ function ChatRoom() {
     const id = await messagesRef.add(payload)
 
     setMessages([...messages, { ...payload, _id: id }])
-    setFormValue('image')
-    // Storage.uploadFile(files);
-    // Storage.openFile(files.name);
+    setFormValue('');
   }
 
   return (<>
     <main>
       {messages && messages.map(msg => <ChatMessage key={msg._id} message={msg} />)}
     </main>
-    {/* if file was selected then sendfilemessage, else sendtextmessage*/}
-    <form onSubmit={formValue === 'image' ? sendFileMessage : sendTextMessage}>
-    {/* <form onSubmit={formValue === 'image' ? sendFileMessage : sendTextMessage}> */}
-
-      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+    <form onSubmit={formValue === files?.name ? sendFileMessage : sendTextMessage}>
+      <input value={formValue} onChange={(e) => {
+        setFormValue(e.target.value);}} placeholder="say something nice"/>
       <IconButton color="primary" aria-label="upload picture" component="label" onClick={
         // open sweetalert
         async () => {
@@ -135,9 +123,7 @@ function ChatRoom() {
                   document.getElementById('swal-input2').value
                 ]
             }
-            
           }).then((result) => {
-            // if request then send request else send money
             if(result.value[1] === 'request'){
               Swal.fire({
                 title: 'Request Sent',
@@ -165,7 +151,7 @@ function ChatRoom() {
         (e) => {
           setFile(e.target.files[0]);
           console.log(e.target.files[0]);
-          setFormValue('image');
+          setFormValue(e.target.files[0].name);
         }
       }/>
         <InsertPhotoIcon />
@@ -191,7 +177,9 @@ function ChatMessage(props) {
   return (
   <>
     <div className={`message ${messageClass}`}>
-      {props.message.file ? <img border-radius='80%' src={imageMedia}/> : <p>{props.message.text}</p>}
+      {props.message.file ? <img border-radius='0%' 
+      
+      src={imageMedia}/> : <p>{props.message.text}</p>}
     </div>
   </>)
 }
