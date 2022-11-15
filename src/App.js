@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import SendIcon from '@mui/icons-material/Send';
 import PaidIcon from '@mui/icons-material/Paid';
-import { TextField, Select, InputLabel, FormControl } from '@mui/material'
 import Swal from 'sweetalert2'
 
 function App() {
@@ -96,6 +95,7 @@ function ChatRoom() {
 
     setMessages([...messages, { ...payload, _id: id }])
     setFormValue('');
+    // setFile(null);
   }
 
   return (<>
