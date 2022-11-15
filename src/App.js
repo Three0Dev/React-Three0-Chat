@@ -1,5 +1,5 @@
 import React from 'react';
-import {Auth, Database, Storage} from '@three0dev/js-sdk'
+import {Auth, Database, Storage, Token} from '@three0dev/js-sdk'
 import { env } from './env';
 import IconButton from '@mui/material/IconButton';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
@@ -17,8 +17,8 @@ function App() {
       </header>
 
       <section>
-        {/* {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />} */}
-        <ChatRoom />
+        {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />}
+        {/* <ChatRoom /> */}
       </section>
 
     </div>
@@ -133,13 +133,20 @@ function ChatRoom() {
               })
             }
             else{
-              Swal.fire({
-                title: 'Money Sent',
-                text: 'You have sent ' + result.value[0] + ' NEAR',
-                icon: 'success',
-                confirmButtonText: 'Ok'
-              })
-            }
+              if (Token.isUserRegistered()){
+                Token.transferTokens(result.value[0]).then((result) => {
+                  Token.getBalance().then((balance) => {
+                    Swal.fire({
+                      title: 'Payment Sent',
+                      text: 'You have sent ' + result.value[0] + ' NEAR. Your balance is ' + balance + ' NEAR',
+                      icon: 'success',
+                      confirmButtonText: 'Ok'
+                    })
+                    console.log(balance)
+                  })
+                  console.log(result)
+                })
+            }}
           })
         }
       }>
