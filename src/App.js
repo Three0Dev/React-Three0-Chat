@@ -112,8 +112,8 @@ function ChatRoom() {
           const { value: result } = await Swal.fire({
             title: 'Three0 Pay',
             html:
+              '<input id="swal-input3" class="swal2-input" placeholder="Name">' +
               '<input id="swal-input1" class="swal2-input" placeholder="Amount">' +
-              '<input id="swal-input3" class="swal2-input" placeholder="Amount">' +
               '<select id="swal-input2" class="swal2-input">' +
               '<option value="send">Send</option>' +
               '<option value="request">Request</option>' +
