@@ -16,8 +16,8 @@ function App() {
       </header>
 
       <section>
-        {/* {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />} */}
-        <ChatRoom />
+        {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />}
+        {/* <ChatRoom /> */}
       </section>
 
     </div>
@@ -25,15 +25,14 @@ function App() {
 }
 
 function SignIn() {
-  const signIn = Auth.login;
-
   return (
-      <button onClick={signIn}>Sign in with NEAR</button>
+      <button onClick={() => Auth.login()}>Sign in with NEAR</button>
   )
 }
 function SignOut() {
   const signOut = async () => {
     await Auth.logout()
+    window.location.reload()
   }
 
   return Auth.isLoggedIn() && (
@@ -83,6 +82,9 @@ function ChatRoom() {
 
     const uid = Auth.getAccountId();
 
+    Storage.uploadFile(files);
+    Storage.openFile(files.name);
+    
     console.log(files);
 
     const payload = {
@@ -94,7 +96,7 @@ function ChatRoom() {
     const id = await messagesRef.add(payload)
 
     setMessages([...messages, { ...payload, _id: id }])
-    Storage.uploadFile(files)
+  
     setFormValue('');
     // setFile(null);
   }
