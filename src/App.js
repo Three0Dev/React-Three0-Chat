@@ -17,7 +17,6 @@ function App() {
 
       <section>
         {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />}
-        {/* <ChatRoom /> */}
       </section>
 
     </div>
@@ -27,6 +26,7 @@ function App() {
 function SignIn() {
   return (
       <button onClick={() => Auth.login()}>Sign in with NEAR</button>
+      // reload page after login
   )
 }
 function SignOut() {
@@ -109,7 +109,7 @@ function ChatRoom() {
       <IconButton color="primary" aria-label="upload picture" component="label" onClick={
         // open sweetalert
         async () => {
-          const { value: amount } = await Swal.fire({
+          const { value: result } = await Swal.fire({
             title: 'Three0 Pay',
             html:
               '<input id="swal-input1" class="swal2-input" placeholder="Amount">' +
@@ -124,31 +124,30 @@ function ChatRoom() {
                   document.getElementById('swal-input2').value
                 ]
             }
-          }).then((result) => {
-            if(result.value[1] === 'request'){
+          });
+          
+            if(result[1] === 'request'){
               Swal.fire({
                 title: 'Request Sent',
-                text: 'You have requested ' + result.value[0] + ' NEAR',
+                text: 'You have requested ' + result[0] + ' NEAR',
                 icon: 'success',
                 confirmButtonText: 'Ok'
               })
-            }
-            else{
-              if (Token.isUserRegistered()){
-                Token.transferTokens(result.value[0]).then((result) => {
-                  Token.getBalance().then((balance) => {
-                    Swal.fire({
-                      title: 'Payment Sent',
-                      text: 'You have sent ' + result.value[0] + ' NEAR. Your balance is ' + balance + ' NEAR',
-                      icon: 'success',
-                      confirmButtonText: 'Ok'
-                    })
-                    console.log(balance)
-                  })
-                  console.log(result)
+            }else{
+              // const isUserRegistered = await Token.isUserRegistered();
+              // console.log(isUserRegistered)
+              // if (isUserRegistered){
+                await Token.transferTokens('sploosh.testnet',result[0])
+                const balance = await Token.getBalance()
+
+                Swal.fire({
+                  title: 'Payment Sent',
+                  text: 'You have sent ' + result[0] + ' NEAR. Your balance is ' + balance + ' NEAR',
+                  icon: 'success',
+                  confirmButtonText: 'Ok'
                 })
-            }}
-          })
+            // }
+          }
         }
       }>
         {/* send money */}
