@@ -116,7 +116,7 @@ function ChatRoom() {
               '<input id="swal-input1" class="swal2-input" placeholder="Amount">' +
               '<select id="swal-input2" class="swal2-input">' +
               '<option value="send">Send</option>' +
-              '<option value="request">Request</option>' +
+              // '<option value="request">Request</option>' +
               '</select>',
             focusConfirm: false,
             preConfirm: () => {
@@ -128,28 +128,19 @@ function ChatRoom() {
             }
           });
           
-            if(result[1] === 'request'){
-              Swal.fire({
-                title: 'Request Sent',
-                text: 'You have requested ' + result[0] + ' NEAR',
-                icon: 'success',
-                confirmButtonText: 'Ok'
-              })
-            }else{
+            // if(result[1] === 'request'){
+            //   Swal.fire({
+            //     title: 'Request Sent',
+            //     text: 'You have requested ' + result[0] + ' NEAR',
+            //     icon: 'success',
+            //     confirmButtonText: 'Ok'
+            //   })
+            // }else{
               // const isUserRegistered = await Token.isUserRegistered();
               // console.log(isUserRegistered)
               // if (isUserRegistered){
                 await Token.transferTokens(result[2],result[0])
-                const balance = await Token.getBalance()
-
-                Swal.fire({
-                  title: 'Payment Sent',
-                  text: 'You have sent ' + result[0] + ' NEAR. Your balance is ' + balance + ' NEAR',
-                  icon: 'success',
-                  confirmButtonText: 'Ok'
-                })
-            // }
-          }
+          // }
         }
       }>
         {/* send money */}
