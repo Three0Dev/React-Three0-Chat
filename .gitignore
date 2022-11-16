@@ -25,3 +25,6 @@ yarn-error.log*
 dist/
 .cache/
 src/env.js
+*.code-workspace
+src/Senior-Design.code-workspace
+src/Senior-Design.code-workspace

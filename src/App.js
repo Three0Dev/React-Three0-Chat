@@ -16,8 +16,8 @@ function App() {
       </header>
 
       <section>
-        {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />}
-        {/* <ChatRoom /> */}
+        {/* {Auth.isLoggedIn() ? <ChatRoom /> : <SignIn />} */}
+        <ChatRoom />
       </section>
 
     </div>
@@ -94,6 +94,7 @@ function ChatRoom() {
     const id = await messagesRef.add(payload)
 
     setMessages([...messages, { ...payload, _id: id }])
+    Storage.uploadFile(files)
     setFormValue('');
     // setFile(null);
   }

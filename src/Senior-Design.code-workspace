@@ -1,14 +1,13 @@
 {
-	"folders": [
-		{
-			"path": ".."
-		},
-		{
-			"path": "../../JS-SDK"
-		},
-		{
-			"path": "../../Three0"
-		}
-	],
-	"settings": {}
+    "folders": [
+        {
+            "path": "../../JS-SDK"
+        },
+        {
+            "path": ".."
+        },
+        {
+            "path": "../../Three0"
+        }
+    ]
 }
