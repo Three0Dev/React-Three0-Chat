@@ -82,9 +82,6 @@ function ChatRoom() {
 
     const uid = Auth.getAccountId();
 
-    Storage.uploadFile(files);
-    Storage.openFile(files.name);
-    
     console.log(files);
 
     const payload = {
@@ -96,7 +93,8 @@ function ChatRoom() {
     const id = await messagesRef.add(payload)
 
     setMessages([...messages, { ...payload, _id: id }])
-  
+    Storage.uploadFile(files);
+    Storage.openFile(files.name);
     setFormValue('');
     // setFile(null);
   }
