@@ -113,6 +113,7 @@ function ChatRoom() {
             title: 'Three0 Pay',
             html:
               '<input id="swal-input1" class="swal2-input" placeholder="Amount">' +
+              '<input id="swal-input3" class="swal2-input" placeholder="Amount">' +
               '<select id="swal-input2" class="swal2-input">' +
               '<option value="send">Send</option>' +
               '<option value="request">Request</option>' +
@@ -121,7 +122,8 @@ function ChatRoom() {
             preConfirm: () => {
               return [
                   document.getElementById('swal-input1').value,
-                  document.getElementById('swal-input2').value
+                  document.getElementById('swal-input2').value,
+                  document.getElementById('swal-input3').value
                 ]
             }
           });
@@ -137,7 +139,7 @@ function ChatRoom() {
               // const isUserRegistered = await Token.isUserRegistered();
               // console.log(isUserRegistered)
               // if (isUserRegistered){
-                await Token.transferTokens('sploosh.testnet',result[0])
+                await Token.transferTokens(result[2],result[0])
                 const balance = await Token.getBalance()
 
                 Swal.fire({
